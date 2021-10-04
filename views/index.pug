@@ -1,5 +1,28 @@
-extends layout
+extends layout.pug
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+    h1 Books
+    p
+      a.button(href='./biblio_db/new-book', id='new_book_button') Create New Book
+      a.button(href='./biblio_db/update-book', id='update_book_button') Update Book
+
+    table
+      thead
+        tr
+          th Title
+          th Author
+          th Genre
+          th Year
+      tbody
+        tr
+          td
+            a(href='book_detail.html') The Hunger Games
+          td Suzanne Collins
+          td Fantasy
+          td 2008
+        tr
+          td
+            a(href='book_detail.html') Catching Fire
+          td Suzanne Collins
+          td Fantasy
