@@ -5,7 +5,6 @@ block content
     h1 Books
     p
       a.button(href='/books/new-book', id='new_book_button') Create New Book
-      a.button(href='/books/update-book', id='update_book_button') Update Book
 
     table
       thead
@@ -15,14 +14,11 @@ block content
           th Genre
           th Year
       tbody
+      each book in books
+        book
         tr
           td
-            a(href='book_detail.html') The Hunger Games
-          td Suzanne Collins
-          td Fantasy
-          td 2008
-        tr
-          td
-            a(href='book_detail.html') Catching Fire
-          td Suzanne Collins
-          td Fantasy
+            a(href="/books/" + book.id)= book.title
+          td= book.author
+          td= book.genre
+          td= book.year

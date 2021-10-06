@@ -1,0 +1,11 @@
+extends layout.pug
+
+block content 
+
+    h1= book.title
+    h2= book.author 
+    h3= book.genre 
+    h3= book.year 
+
+    a.button(href='/books/' + book.id + '/update-book', id='update_book_button') Update Book
+    a.button(href='/books/' + book.id + '/delete-book', id='delete_book_button') Delete Book
