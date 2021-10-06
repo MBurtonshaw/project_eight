@@ -29,32 +29,27 @@ router.get( '/page-not-found', asyncHandler( async( req, res, next ) => {
   res.render( 'page-not-found' );
 }));
 
-router.get( '/new-book', asyncHandler( async( req, res, next ) => {
+router.get( '/new', asyncHandler( async( req, res, next ) => {
   res.render( 'new-book', {book: {}, title: 'New Book'});
 }));
 
 router.get( '/:id', asyncHandler( async( req, res, next ) => {
   const book = await Book.findByPk(req.params.id);
-  res.render( 'solo', { book, title: book.title } );
+  res.render( 'update-book', { book, title: 'Update Book' } );
 }));
 
-router.get( '/:id/update-book', asyncHandler( async( req, res, next )=>{
-  const book = await Book.findByPk(req.params.id);
-  res.render( 'update-book', { book, title: 'Update Book' });
-}));
-
-router.post( '/:id/update-book', asyncHandler( async( req, res, next )=>{
+router.post( '/:id', asyncHandler( async( req, res, next )=>{
   let book = await Book.findByPk(req.params.id);
   await book.update(req.body);
   res.redirect('/books');
 }));
 
-router.get( '/:id/delete-book', asyncHandler( async( req, res, next )=>{
+router.get( '/:id/delete', asyncHandler( async( req, res, next )=>{
   let book = await Book.findByPk(req.params.id);
   res.render( 'delete-book', { book, title: 'Delete book' });
 }));
 
-router.post( '/:id/delete-book', asyncHandler( async( req, res, next )=>{
+router.post( '/:id/delete', asyncHandler( async( req, res, next )=>{
   let book = await Book.findByPk(req.params.id);
   await book.destroy();
   res.redirect('/books');
