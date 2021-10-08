@@ -16,7 +16,7 @@ block content
       tbody
       each book in books
         book
-        tr
+        tr(class='row-style')
           td
             a(href="/books/" + book.id)= book.title
           td= book.author
