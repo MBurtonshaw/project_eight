@@ -22,8 +22,9 @@ a.button, input[type=submit] {
   padding: 10px 14px 12px;
   margin-top: 5px;
   font-size: 14px;
-  border-radius: 2px;
+  border-radius: 3px;
   cursor: pointer;
+  border: 1.2px solid black;
 }
 
 #button_grid {
@@ -38,6 +39,7 @@ a.button, input[type=submit] {
   grid-column-start: 1;
   grid-column-end: 1;
   border: 1.35px solid black;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 .grid_button_2 {
@@ -46,6 +48,7 @@ a.button, input[type=submit] {
   grid-column-start: 1;
   grid-column-end: 1;
   border: 1.35px solid black;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 .grid_button_3 {
@@ -54,6 +57,7 @@ a.button, input[type=submit] {
   grid-column-start: 1;
   grid-column-end: 1;
   border: 1.35px solid black;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 #button_grid_2 {
@@ -68,6 +72,7 @@ a.button, input[type=submit] {
   grid-column-start: 1;
   grid-column-end: 1;
   border: 1.35px solid black;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 .grid_button_5 {
@@ -76,10 +81,12 @@ a.button, input[type=submit] {
   grid-column-start: 1;
   grid-column-end: 1;
   border: 1.35px solid black;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 form a.button, input[type=submit] {
   transition: 0.4s;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a.button:hover, input[type=submit]:hover {

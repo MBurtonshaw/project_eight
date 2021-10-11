@@ -21,10 +21,6 @@ router.get( '/', asyncHandler( async( req, res, next ) => {
   res.render( 'index', { books, title: 'Library Database' });
 }));
 
-router.get( '/page-not-found', asyncHandler( async( req, res, next ) => {
-  res.render( 'page-not-found' );
-}));
-
 router.get( '/new', asyncHandler( async( req, res, next ) => {
   res.render( 'new-book', {book: {}, title: 'New Book'});
 }));
@@ -49,7 +45,7 @@ router.get( '/:id', asyncHandler( async( req, res, next ) => {
   let book;
   book = await Book.findByPk(req.params.id);
   if (book) {
-      res.render( 'update-book', { book, title: book.title } );
+      res.render( 'solo', { book, title: book.title } );
   } else {
     res.status(404).render('page-not-found');
   }
@@ -79,6 +75,10 @@ router.post( '/:id/delete', asyncHandler( async( req, res, next )=>{
     await book.destroy();
     console.log(book.title + ' by ' + book.author + ' has been deleted');
     res.redirect('/books');
+}));
+
+router.get( '/page-not-found', asyncHandler( async( req, res, next ) => {
+  res.render( 'page-not-found' );
 }));
 
 module.exports = router;

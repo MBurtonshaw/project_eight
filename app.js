@@ -34,25 +34,37 @@ app.use('/books', booksRouter);
   console.log('Step 1: complete. Connection established.');
   await sequelize.sync();
   console.log('Step 2: complete. Database is synced.');
-} catch(err) {
-  console.error(err);
+} catch(error) {
+  if (error.name === 'SequelizeValidationError') {
+    const errors = error.errors.map(err = err.message);
+    console.error('Validation Errors', errors);
+  } else {
+    throw error;
+  }
 }
 })();
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+//404 error handler
+app.use((req, res, next) => {
+  const err = new Error();
+  err.status = 404;
+  err.message = " ...you don't wanna go down that road";
+  next(err);
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+//500 error handler
+app.use((err, req, res, next) => {
+  if (err) {
+      console.log("Global error handler has been called. ", err);
+      if (err.status === 404) {
+          err.message = " ...you don't wanna go down that road";
+          res.status(404).render("page-not-found", {err});
+      } else {
+          err.message = err.message || "Ooops!";
+          err.status = err.status || 500;
+          res.status(500).render("error", {err});
+      }
+  }
 });
 
 module.exports = app;

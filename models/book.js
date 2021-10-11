@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
+          args: true,
           msg: 'Please enter a book title'
         }
       }
@@ -26,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
+          args: true,
           msg: 'Please enter an author name'
         }
       }
