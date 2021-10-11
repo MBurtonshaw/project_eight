@@ -46,8 +46,7 @@ router.post( '/new', asyncHandler( async( req, res, next ) => {
 }));
 
 router.get( '/:id', asyncHandler( async( req, res, next ) => {
-  let book;
-  book = await Book.findByPk(req.params.id);
+  const book = await Book.findByPk(req.params.id);
   if (book) {
       res.render( 'solo', { book, title: book.title } );
   } else {
@@ -55,7 +54,17 @@ router.get( '/:id', asyncHandler( async( req, res, next ) => {
   }
 }));
 
-router.post( '/:id', asyncHandler( async( req, res, next )=>{
+router.get( '/:id/update', asyncHandler( async( req, res, next ) => {
+  let book;
+  book = await Book.findByPk(req.params.id);
+  if (book) {
+      res.render( 'update-book', { book, title: book.title } );
+  } else {
+    res.status(404).render('page-not-found');
+  }
+}));
+
+router.post( '/:id/update', asyncHandler( async( req, res, next )=>{
   let book;
     book = await Book.findByPk(req.params.id);
     await book.update(req.body);
