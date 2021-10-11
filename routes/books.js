@@ -21,6 +21,10 @@ router.get( '/', asyncHandler( async( req, res, next ) => {
   res.render( 'index', { books, title: 'Library Database' });
 }));
 
+router.post( '/', asyncHandler(async(req, res, next) => {
+  res.redirect( '/books/' + req.body.search_bar );
+}));
+
 router.get( '/new', asyncHandler( async( req, res, next ) => {
   res.render( 'new-book', {book: {}, title: 'New Book'});
 }));
