@@ -9,7 +9,7 @@ function asyncHandler( cb ){
       await cb( req, res, next )
     } catch( error ){
       // Forward error to the global error handler
-      next( error );
+      res.render('error', { error });
     }
   }
 }
@@ -31,45 +31,43 @@ router.get( '/new', asyncHandler( async( req, res, next ) => {
 
 router.post( '/new', asyncHandler( async( req, res, next ) => {
   let book;
-  try {
-  book = await Book.create(req.body);
-  console.log(book.title + ' by ' + book.author + ' has been added to the database');
-  res.redirect( '/books' );
-  } catch(err) {
-    if(err.name === 'SequelizeValidationError') {
-      book = await Book.build(req.body);
-      res.render('/books/new', { book, errors: error.errors, title: 'New Article' });
-    } else {
-      throw error;
+  try{
+      book = await Book.create(req.body);
+      console.log(book.title + ' by ' + book.author + ' has been added to the database');
+      res.redirect( '/books' );
+    } catch (error) {
+      if (error.name === 'SequelizeValidationError') {
+        book = await Book.build(req.body);
+        const errors = error.errors.map(err=>err.message);
+        res.render('error', {errors});
+      } else {
+        throw error;
+      }
     }
-  }
 }));
 
 router.get( '/:id', asyncHandler( async( req, res, next ) => {
-  const book = await Book.findByPk(req.params.id);
-  if (book) {
-      res.render( 'solo', { book, title: book.title } );
-  } else {
-    res.status(404).render('page-not-found');
-  }
-}));
-
-router.get( '/:id/update', asyncHandler( async( req, res, next ) => {
   let book;
   book = await Book.findByPk(req.params.id);
-  if (book) {
-      res.render( 'update-book', { book, title: book.title } );
+  if ( book ) {
+    const book = await Book.findByPk(req.params.id);
+    res.render( 'update-book', { book, title: book.title } );
   } else {
-    res.status(404).render('page-not-found');
+    next();
   }
+
 }));
 
-router.post( '/:id/update', asyncHandler( async( req, res, next )=>{
+router.post( '/:id', asyncHandler( async( req, res, next )=>{
   let book;
     book = await Book.findByPk(req.params.id);
+    if (book) {
     await book.update(req.body);
     console.log(book.title + ' by ' + book.author + ' has been updated');
     res.redirect('/books');
+    } else {
+      next();
+    }
 }));
 
 router.get( '/:id/delete', asyncHandler(async(req, res) => {
@@ -78,20 +76,28 @@ router.get( '/:id/delete', asyncHandler(async(req, res) => {
   if (book) {
     res.render( 'delete-book', { book, title: 'Delete Book' });
   } else {
-    res.status(404).render('page-not-found');
+    next();
   }
 }));
 
 router.post( '/:id/delete', asyncHandler( async( req, res, next )=>{
   let book;
   book = await Book.findByPk(req.params.id);
+  if (book) {
     await book.destroy();
     console.log(book.title + ' by ' + book.author + ' has been deleted');
     res.redirect('/books');
+  } else {
+    next();
+  }
 }));
 
 router.get( '/page-not-found', asyncHandler( async( req, res, next ) => {
   res.render( 'page-not-found' );
+}));
+
+router.get( '/error', asyncHandler( async( req, res, next ) => {
+  res.render( 'error' );
 }));
 
 module.exports = router;

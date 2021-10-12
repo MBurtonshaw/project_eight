@@ -32,12 +32,12 @@ app.use('/books', booksRouter);
   try{
   await sequelize.authenticate();
   console.log('Step 1: complete. Connection established.');
-  await sequelize.sync();
+  await sequelize.sync({force: true});
   console.log('Step 2: complete. Database is synced.');
 } catch(error) {
   if (error.name === 'SequelizeValidationError') {
-    const errors = error.errors.map(err = err.message);
-    console.error('Validation Errors', errors);
+    const errors = error.errors.map(err => err.message);
+    console.error('Validation errors: ', errors);
   } else {
     throw error;
   }
@@ -55,9 +55,8 @@ app.use((req, res, next) => {
 //500 error handler
 app.use((err, req, res, next) => {
   if (err) {
-      console.log("Global error handler has been called. ", err);
+      console.log("Global error handler has been called... ", err);
       if (err.status === 404) {
-          err.message = " ...you don't wanna go down that road";
           res.status(404).render("page-not-found", {err});
       } else {
           err.message = err.message || "Ooops!";
