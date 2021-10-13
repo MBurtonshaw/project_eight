@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Book = require('./models');
-
 var indexRouter = require('./routes/index');
 var booksRouter = require('./routes/books');
 const Sequelize = require('sequelize');
@@ -12,7 +11,6 @@ const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: 'library.db'
 });
-
 var app = express();
 
 // view engine setup
@@ -25,16 +23,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//linking routes/books.js & routes/index.js files for routing
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
 
 (async () => {
   try{
+    //testing db connection & force-syncing
   await sequelize.authenticate();
   console.log('Step 1: complete. Connection established.');
   await sequelize.sync({force: true});
   console.log('Step 2: complete. Database is synced.');
 } catch(error) {
+  //catching validation errors & mapping to the console
   if (error.name === 'SequelizeValidationError') {
     const errors = error.errors.map(err => err.message);
     console.error('Validation errors: ', errors);

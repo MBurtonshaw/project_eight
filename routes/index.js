@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Book = require( '../models' ).Book;
 
-/* GET home page. */
+/* GET home page. Redirects to /books */
 router.get('/', (req, res, next) => {
   res.redirect('/books');
 });

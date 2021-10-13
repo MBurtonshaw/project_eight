@@ -9,10 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-    }
   };
+  //initializing a Book model w title, author, genre, & year attributes
+  //title & author have validators in place & custom error messages
   Book.init({
     title: {
       type: DataTypes.STRING,
