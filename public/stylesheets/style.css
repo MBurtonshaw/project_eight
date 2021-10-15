@@ -155,5 +155,11 @@ input[type=text] {
 }
 
 .error {
-  color: rgb(236, 15, 15);
+  color: #9c0b0b;
+}
+
+.small_error {
+  font-size: 1.2em;
+  color: #9c0b0b;
+  text-shadow: 0.25px 0.25px;
 }

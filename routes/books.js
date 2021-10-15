@@ -44,8 +44,7 @@ router.post( '/new', asyncHandler( async( req, res, next ) => {
       //and the page is rendered with the error message(s)
       if (error.name === 'SequelizeValidationError') {
         book = await Book.build(req.body);
-        const errors = error.errors.map(err=>err.message);
-        res.render('error', {errors});
+        res.render('new-book', { book, errors: error.errors, title: 'New Book' });
       } else {
         //else, throw to global handler in app.js
         throw error;
