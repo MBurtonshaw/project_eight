@@ -69,13 +69,21 @@ router.get( '/:id', asyncHandler( async( req, res, next ) => {
 router.post( '/:id', asyncHandler( async( req, res, next )=>{
   let book;
     book = await Book.findByPk(req.params.id);
-    if (book) {
+    try{
       //method to update an entry's data, then user is redirected to homepage
     await book.update(req.body);
     console.log(book.title + ' by ' + book.author + ' has been updated');
     res.redirect('/books');
-    } else {
-      next();
+    } catch (error) {
+      //catching validation errors; if they exist, current book entry creation is stalled,
+      //and the page is rendered with the error message(s)
+      if (error.name === 'SequelizeValidationError') {
+        await Book.build(req.body);
+        res.render('update-book', { book, errors: error.errors, title: 'Update Book' });
+      } else {
+        //else, throw to global handler in app.js
+        throw error;
+      }
     }
 }));
 

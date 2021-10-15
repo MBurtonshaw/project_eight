@@ -8,19 +8,19 @@ block content
 
   form(action='/books/new', method='POST')
     
-      p
-        label(for='title') Title
-        input#title(name='title' type='text')
-      p
-        label(for='author') Author
-        input#author(name='author' type='text')
-      p
-        label(for='genre') Genre
-        input#genre(name='genre' type='text')
-      p
-        label(for='year') Year
-        input#year(name='year' type='text')
+    p
+      label(for='title') Title
+      input#title(name='title' type='text')
+    p
+      label(for='author') Author
+      input#author(name='author' type='text')
+    p
+      label(for='genre') Genre
+      input#genre(name='genre' type='text')
+    p
+      label(for='year') Year
+      input#year(name='year' type='text')
 
-      div(id='button_grid_2')
-        input(type='submit' value='Create New Book' class='grid_button_4')
-        a.button(href='/books' class='grid_button_5') Cancel
+    div(id='button_grid_2')
+      input(type='submit' value='Create New Book' class='grid_button_4')
+      a.button(href='/books' class='grid_button_5') Cancel
