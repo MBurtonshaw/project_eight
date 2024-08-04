@@ -1,4 +1,4 @@
-# project_eight
-TeamTreehouse Project 8
+An app to add, update, delete book entries in a library database. Built with Express.js and SQLize.
 
-This is a sequelize project in which a user can work with book entries in a library database. Users can add, update, delete, and search by id#.
+# To Run
+node app.js
